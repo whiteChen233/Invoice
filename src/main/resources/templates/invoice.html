@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>请填写发票信息</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <script src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/invoice.js}"></script>
+</head>
+<body>
+<div class="invoiceMain">
+    <form onsubmit="return ajaxSubmit()">
+        <div class="invoiceHeader">
+            <ul class="headerLeft">
+                <li><label>征收大厅编码:</label><span></span></li>
+                <li><label>执手单位编码:</label><span></span></li>
+                <li><label>执收单位名称:</label><span></span></li>
+            </ul>
+            <div class="headerMiddle">
+                <h1>XX增值税专用发票</h1>
+                <div class="line"></div>
+                <p class="date" th:text="${date}"></p>
+            </div>
+            <ul class="headerRight"></ul>
+        </div>
+        <div class="invoiceBody">
+            <div class="userInfo">
+                <div class="payer">付款人</div>
+                <ul>
+                    <li class="bottom-line">
+                        <label class="right-line" for="payer-name">全&nbsp;&nbsp;&nbsp;&nbsp;称</label>
+                        <input id="payer-name" type="text"/>
+                    </li>
+                    <li class="bottom-line">
+                        <label class="right-line" for="payer-account">账&nbsp;&nbsp;&nbsp;&nbsp;号</label>
+                        <input id="payer-account" type="text"/>
+                    </li>
+                    <li>
+                        <label class="right-line" for="payer-bank">开户银行</label>
+                        <input id="payer-bank" type="text"/>
+                    </li>
+                </ul>
+                <div class="payee">收款人</div>
+                <ul>
+                    <li class="bottom-line">
+                        <label class="right-line" for="payee-name">全&nbsp;&nbsp;&nbsp;&nbsp;称</label>
+                        <input id="payee-name" type="text"/>
+                    </li>
+                    <li class="bottom-line">
+                        <label class="right-line" for="payee-account">账&nbsp;&nbsp;&nbsp;&nbsp;号</label>
+                        <input id="payee-account" type="text"/>
+                    </li>
+                    <li>
+                        <label class="right-line" for="payee-bank">开户银行</label>
+                        <input id="payee-bank" type="text"/>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <table class="itemTable">
+                    <tr style="text-align: center" class="bottom-line no-right-line">
+                        <td style="width: 35%">收入项目</td>
+                        <td style="width: 15%">编码</td>
+                        <td style="width: 15%">数量</td>
+                        <td style="width: 15%">收缴标准</td>
+                        <td style="width: 20%" class="no-right-line">金额</td>
+                    </tr>
+                    <tr class="bottom-line no-right-line">
+                        <td>
+                            <label>
+                                <select id="item-select-0" class="item-select">
+                                    <option value="" selected>-- 请选择 --</option>
+                                    <option th:each="op:${options}" th:value="${op}" th:text="${op}"></option>
+                                </select>
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input id="item-code-0" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input id="item-num-0" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input id="item-norm-0" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                        <td class="no-right-line">
+                            <label>
+                                <input id="item-amount-0" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="bottom-line no-right-line">
+                        <td>
+                            <label>
+                                <select id="item-select-1" class="item-select">
+                                    <option value="" selected>-- 请选择 --</option>
+                                    <option th:each="op:${options}" th:value="${op}" th:text="${op}"></option>
+                                </select>
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input id="item-code-1" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input id="item-num-1" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input id="item-norm-1" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                        <td class="no-right-line">
+                            <label>
+                                <input id="item-amount-1" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="bottom-line no-right-line">
+                        <td>
+                            <label>
+                                <select id="item-select-2" class="item-select">
+                                    <option value="" selected>-- 请选择 --</option>
+                                    <option th:each="op:${options}" th:value="${op}" th:text="${op}"></option>
+                                </select>
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input id="item-code-2" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input id="item-num-2" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input id="item-norm-2" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                        <td class="no-right-line">
+                            <label>
+                                <input id="item-amount-2" class="item-input" type="text"/>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="total">
+                        <td colspan="5">
+                            <label>金额(大写)<input id="amount-upper" class="amount-input" style="width: 60%" type="text"></label>
+                            <label>(小写)<input id="amount-lower" class="amount-input" type="text"></label>
+                        </td>
+                    </tr>
+                    <tr class="stamp">
+                        <td colspan="2">
+                            <p>执收单位(盖章)</p>
+                            <p style="height: 40px"></p>
+                            <p style="text-align: center">经办人(盖章)</p>
+                        </td>
+                        <td colspan="3" class="no-right-line">
+                            <p style="height: 95%">备注:</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="toolbar">
+            <input type="reset" value="重置"/>
+            <input style="background: lightskyblue" type="submit" value="保存"/>
+        </div>
+    </form>
+</div>
+</body>
+</html>
