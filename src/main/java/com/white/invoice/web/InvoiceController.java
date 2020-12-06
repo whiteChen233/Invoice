@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.white.invoice.core.R;
 import com.white.invoice.model.Invoice;
+import com.white.invoice.model.Item;
 import com.white.invoice.utils.PdfUtil;
 
 @Controller
@@ -26,12 +27,10 @@ public class InvoiceController {
 
     @GetMapping("")
     public String index(Model model) {
-        List<String> options = new ArrayList<>();
-        options.add("Option 1");
-        options.add("Option 2");
-        options.add("Option 3");
-        options.add("Option 4");
-
+        List<Item> options = new ArrayList<>();
+        for (int i = 0; i < 4; i ++) {
+            options.add(new Item("Option" + i, "Code" + i, 1, "Norm" + i, (i + 1) * 10.0));
+        }
         model.addAttribute("options", options);
         model.addAttribute("date", DateTimeFormatter.ofPattern(" yyyy 年 MM 月 dd 日").format(LocalDate.now()));
         model.addAttribute("invoice", Invoice.Builder.build4Init());

@@ -7,6 +7,23 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <script src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/invoice.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+        $(function () {
+            let op = [[${options}]]
+            for (let i = 0; i < 3; i++) {
+                $("#item-select-" + i).change(() => {
+                    for (let inx in op) {
+                        if (op[inx].value === $("#item-select-" + i).val()) {
+                            $("#item-code-" + i).val(op[inx].code);
+                            $("#item-num-" + i).val(op[inx].num);
+                            $("#item-norm-" + i).val(op[inx].norm);
+                            $("#item-amount-" + i).val(op[inx].amount);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </head>
 <body>
 <div class="invoiceMain">
@@ -66,93 +83,34 @@
                         <td style="width: 15%">收缴标准</td>
                         <td style="width: 20%" class="no-right-line">金额</td>
                     </tr>
-                    <tr class="bottom-line no-right-line">
+                    <tr th:each="i:${#numbers.sequence(0,2)}" class="bottom-line no-right-line">
                         <td>
                             <label>
-                                <select id="item-select-0" class="item-select">
+                                <select th:id="'item-select-' + ${i}" class="item-select">
                                     <option value="" selected>-- 请选择 --</option>
-                                    <option th:each="op:${options}" th:value="${op}" th:text="${op}"></option>
+                                    <option th:each="op:${options}" th:value="${op.value}"
+                                            th:text="${op.value}"></option>
                                 </select>
                             </label>
                         </td>
                         <td>
                             <label>
-                                <input id="item-code-0" class="item-input" type="text"/>
+                                <input th:id="'item-code-' + ${i}" class="item-input" type="text"/>
                             </label>
                         </td>
                         <td>
                             <label>
-                                <input id="item-num-0" class="item-input" type="text"/>
+                                <input th:id="'item-num-' + ${i}" class="item-input" type="text"/>
                             </label>
                         </td>
                         <td>
                             <label>
-                                <input id="item-norm-0" class="item-input" type="text"/>
+                                <input th:id="'item-norm-' + ${i}" class="item-input" type="text"/>
                             </label>
                         </td>
                         <td class="no-right-line">
                             <label>
-                                <input id="item-amount-0" class="item-input" type="text"/>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr class="bottom-line no-right-line">
-                        <td>
-                            <label>
-                                <select id="item-select-1" class="item-select">
-                                    <option value="" selected>-- 请选择 --</option>
-                                    <option th:each="op:${options}" th:value="${op}" th:text="${op}"></option>
-                                </select>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input id="item-code-1" class="item-input" type="text"/>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input id="item-num-1" class="item-input" type="text"/>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input id="item-norm-1" class="item-input" type="text"/>
-                            </label>
-                        </td>
-                        <td class="no-right-line">
-                            <label>
-                                <input id="item-amount-1" class="item-input" type="text"/>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr class="bottom-line no-right-line">
-                        <td>
-                            <label>
-                                <select id="item-select-2" class="item-select">
-                                    <option value="" selected>-- 请选择 --</option>
-                                    <option th:each="op:${options}" th:value="${op}" th:text="${op}"></option>
-                                </select>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input id="item-code-2" class="item-input" type="text"/>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input id="item-num-2" class="item-input" type="text"/>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input id="item-norm-2" class="item-input" type="text"/>
-                            </label>
-                        </td>
-                        <td class="no-right-line">
-                            <label>
-                                <input id="item-amount-2" class="item-input" type="text"/>
+                                <input th:id="'item-amount-' + ${i}" class="item-input" type="text"/>
                             </label>
                         </td>
                     </tr>
