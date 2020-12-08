@@ -37,7 +37,7 @@ public final class PdfUtil {
     private static final PdfUtil INSTANCE = new PdfUtil();
     private static Font headFont;
     private static Font textFont;
-    private static final BaseColor COLOR = new BaseColor(224, 118, 51);
+    private static final BaseColor COLOR = new BaseColor(156, 82, 35);
 
     static {
         try {
