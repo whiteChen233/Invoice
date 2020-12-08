@@ -9,16 +9,32 @@
     <script type="text/javascript" th:src="@{/js/invoice.js}"></script>
     <script type="text/javascript" th:inline="javascript">
         $(function () {
-            let op = [[${options}]]
+            let op = [[${options}]];
             for (let i = 0; i < 3; i++) {
                 $("#item-select-" + i).change(() => {
-                    for (let inx in op) {
-                        if (op[inx].value === $("#item-select-" + i).val()) {
-                            $("#item-code-" + i).val(op[inx].code);
-                            $("#item-num-" + i).val(op[inx].num);
-                            $("#item-norm-" + i).val(op[inx].norm);
-                            $("#item-amount-" + i).val(op[inx].amount);
+                    $.each(op, (idx, v) => {
+                        if (v.value === $("#item-select-" + i).val()) {
+                            $("#item-code-" + i).val(v.code);
+                            $("#item-num-" + i).val(v.num);
+                            $("#item-norm-" + i).val(v.norm);
+                            $("#item-amount-" + i).val(v.amount);
+                            compute();
+                            return false;
                         }
+                    });
+                });
+
+                $("#item-num-" + i).bind('input propertychange', () => {
+                    let m = $("#item-num-" + i).val();
+                    let s = $("#item-select-" + i).val();
+                    if (!!s) {
+                        $.each(op, (idx, v) => {
+                            if (v.value === s) {
+                                $("#item-amount-" + i).val(m * v.amount);
+                                compute();
+                                return false;
+                            }
+                        });
                     }
                 });
             }
@@ -95,7 +111,7 @@
                         </td>
                         <td>
                             <label>
-                                <input th:id="'item-code-' + ${i}" class="item-input" type="text"/>
+                                <input th:id="'item-code-' + ${i}" class="item-input" type="text" readOnly="readonly"/>
                             </label>
                         </td>
                         <td>
@@ -105,7 +121,7 @@
                         </td>
                         <td>
                             <label>
-                                <input th:id="'item-norm-' + ${i}" class="item-input" type="text"/>
+                                <input th:id="'item-norm-' + ${i}" class="item-input" type="text" readOnly="readonly"/>
                             </label>
                         </td>
                         <td class="no-right-line">
@@ -116,7 +132,8 @@
                     </tr>
                     <tr class="total">
                         <td colspan="5">
-                            <label>金额(大写)<input id="amount-upper" class="amount-input" style="width: 60%" type="text"></label>
+                            <label>金额(大写)<input id="amount-upper" class="amount-input" style="width: 60%"
+                                                type="text"></label>
                             <label>(小写)<input id="amount-lower" class="amount-input" type="text"></label>
                         </td>
                     </tr>
